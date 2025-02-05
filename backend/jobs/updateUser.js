@@ -3,7 +3,7 @@ const User = require("../models/user");
 const updateUser = async (userId, reward) => {
   const user = await User.findById(userId);
 
-  if (!User) throw new Error("User not found");
+  if (!user) throw new Error("User not found");
 
   user.totalClicks += 1;
   user.totalPoints += reward.points;

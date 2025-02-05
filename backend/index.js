@@ -3,14 +3,14 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000", // Allow requests from frontend
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
-
-app.get("/", (req, res) => {
-  res.send("Welcome to the backend server!");
-});
-
-app.listen(5001, () => console.log("Server started on http://localhost:5001"));
 
 const mongoose = require("mongoose");
 mongoose
@@ -23,3 +23,12 @@ mongoose
 
 const rewardRoutes = require("./routes/reward");
 app.use("/api", rewardRoutes);
+
+const userRoutes = require("./routes/user");
+app.use("/api/user", userRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Welcome to the backend server!");
+});
+
+app.listen(5001, () => console.log("Server started on http://localhost:5001"));

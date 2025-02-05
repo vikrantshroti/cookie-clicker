@@ -1,4 +1,4 @@
-const calculateReward = (user) => {
+const calculateRewards = (user) => {
   const reward = { points: 0, prize: false };
 
   if (Math.random() < 0.5) reward.points = 10;
@@ -6,3 +6,5 @@ const calculateReward = (user) => {
 
   return reward;
 };
+
+module.exports = calculateRewards;

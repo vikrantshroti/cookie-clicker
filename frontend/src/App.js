@@ -1,16 +1,23 @@
 import React, { useState } from "react";
-import { Button } from "/components/Button";
-import { clickButton } from "./services/api";
-import { toast } from "react-toastify";
+import Button from "../src/components/Button";
+import { clickButton, createUser } from "./services/api";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
 
-toast.configure();
-
 function App() {
   const [counter, setCounter] = useState(0);
-  const [userId] = useState("USER_ID"); // Replace with actual user ID
+  const [userId] = useState("001"); // Replace with actual user ID
+
+  const handleCreateUser = async () => {
+    try {
+      const { user } = await createUser(userId);
+      toast.success(`User created with ID: ${user._id}`);
+    } catch (err) {
+      toast.error("Failed to create user!");
+    }
+  };
 
   const handleClick = async () => {
     try {
@@ -28,7 +35,9 @@ function App() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h1 className="text-3xl font-bold mb-4">Cookie Clicker</h1>
       <p className="mb-2">Total Clicks: {counter}</p>
-      <Button onClick={handleClick} />
+      <Button onClick={handleCreateUser} label={"Create User"} />
+      <Button onClick={handleClick} label={"Click"} />
+      <ToastContainer />
     </div>
   );
 }
